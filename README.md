@@ -9,26 +9,35 @@ We've released all of the source code for this example in GitHub under an MIT li
 
 Getting started with the sample is easy. It is configured to run out of the box with minimal setup.
 
-### Step 1: Register a web application in B2C Azure AD Tenant
+### Step 1: Register a Microsoft Azure AD B2C Tenant
 
 If you don't have an Azure AD B2C Tenant yet, please [create one](https://azure.microsoft.com/en-us/documentation/articles/active-directory-b2c-get-started/).
 
-Next let's register a web application in your tenant.
+### Step 2: Register your Web API with your Microsoft Azure AD B2C Tenant
 
-* In the main page of your tenant, click `Manage B2C settings`, and you will be redirected to the settings page.
+* [Register a new application](https://docs.microsoft.com/en-us/azure/active-directory-b2c/tutorial-register-applications?tabs=app-reg-preview) using the Azure Portal. 
+    * Use the following information during the app registration: 
 
-* Click `Applications`, then click `Add`. Enter a name like 'my_b2c_app', and switch the `Web App / Web API` option to yes. After that, enter 'http://localhost:3000/auth/openid/return' into the `Reply URL` field. Then click `Generate key` to generate a app key, and save it somewhere. This app key is the client secret of your application. Now click `Create` button to finish registration.
+    | Configuration           | Value                                                             |
+    |-------------------------|-------------------------------------------------------------------|
+    | Application Name        | my_b2c_app                                                        |
+    | Supported account types | Accounts in any organizational directory or any identity provider |
+    | Redirect URI            | http://localhost:3000/auth/openid/return                          |
+    | Permissions             | Grant admin consent to openid and offline_access permissions      |
 
-* Click the application you just created, copy the `Application ID` field and save it somewhere. This value is the clientID of your application.
+* Generate a [New client secret](https://docs.microsoft.com/en-us/azure/active-directory-b2c/tutorial-register-applications?tabs=app-reg-preview#create-a-client-secret) and safely store it. This secret is the client secret for your application.
+* Copy the `Application (client) ID` field and save it somewhere. This value is the clientID of your web api. 
+
+### Step 3: Configuring Azure AD B2C tenant
 
 * Now let's add some policies we will use for this sample. In the setting page, add a sign-in policy, a sign-up poligy, a profile-editing policy and a password-reset policy. When you add the policies, use the names 'signin', 'signup', 'updateprofile' and 'resetpassword' respectively. For `Identity providers`, choose `Email signup`; for `Application claims`, choose `Email Addresses`, `User's Object ID` and any other claims you want; for `Sign-up attributes`, choose `Email Address` and anything else you like.
 
 * Now we have a B2C web application and policies registered. Note that Azure AD adds a 'B2C_1_' prefix automatically to all policy names, so the policy names we will use are actually 'B2C_1_signin', 'B2C_1_signup', 'B2C_1_updateprofile' and 'B2C_1_resetpassword'. 
 
-### Step 2: Download node.js for your platform
+### Step 4: Download node.js for your platform
 To successfully use this sample, you need a working installation of Node.js.
 
-### Step 3: Download the Sample application and modules
+### Step 5: Download the Sample application and modules
 
 Next, clone the sample repo and install the NPM.
 
@@ -37,7 +46,7 @@ From your shell or command line:
 * `$ git clone git@github.com:AzureADQuickStarts/B2C-WebApp-OpenIDConnect-NodeJS.git`
 * `$ npm install`
 
-### Step 4: Configure your server
+### Step 6: Configure your server
 
 * Provide the parameters in `exports.creds` in config.js as instructed.
 
@@ -52,7 +61,7 @@ not suitable for production, you must use mongoDB or other [compatible session s
 * Update `exports.mongoDBSessionMaxAge`. Here you can specify how long you want
 to keep a session in mongoDB. The unit is second(s).
 
-### Step 5: Run the application
+### Step 7: Run the application
 
 * Start mongoDB service.
 
